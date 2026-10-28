@@ -3,10 +3,10 @@ load_dotenv()
 import os
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
-# Keep trained ML binaries outside the Python "models" package.
-# Set ML_MODELS_DIR in .env when storing artifacts somewhere else.
+# ML artifacts are stored alongside the existing model files in ./models.
+# Override ML_MODELS_DIR in .env if you use a different local directory.
 MODELS_DIR = os.path.abspath(
-    os.environ.get("ML_MODELS_DIR", os.path.join(BASE_DIR, "ml_artifacts"))
+    os.environ.get("ML_MODELS_DIR", os.path.join(BASE_DIR, "models"))
 )
 
 class Config:
@@ -24,7 +24,7 @@ class Config:
         'pool_recycle': 3600,
     }
 
-    # Trained ML artifacts are expected in ML_MODELS_DIR (default: ./ml_artifacts).
+    # All six ML artifacts are resolved from ML_MODELS_DIR (default: ./models).
     CENTRE_RECOMMENDATION_MODEL = os.path.join(MODELS_DIR, 'centre_recommendation_model.joblib')
     DEMAND_FORECASTING_MODEL = os.path.join(MODELS_DIR, 'demand_forecasting_model.joblib')
     ETA_PREDICTION_MODEL = os.path.join(MODELS_DIR, 'eta_prediction_model.joblib')
