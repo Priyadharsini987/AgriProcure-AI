@@ -1,5 +1,4 @@
 import os
-import sys
 from app import create_app
 from seed_data import seed_database
 
@@ -13,4 +12,4 @@ if __name__ == '__main__':
     print(f" Agri AI Smart Procurement API Server is LIVE on:")
     print(f" http://127.0.0.1:{port}")
     print(f"=======================================================\n")
-    app.run(host='0.0.0.0', port=port, debug=True)
+    app.run(host='0.0.0.0', port=port, debug=os.environ.get('FLASK_DEBUG', '0') == '1')
