@@ -32,7 +32,7 @@ AgriProcure AI is a full-stack agricultural procurement platform designed to imp
 | `overload_prediction_model.joblib` | Procurement-centre overload prediction |
 | `smart_slot_allocation_model.joblib` | Delivery time-slot allocation |
 
-**Model storage:** The three small model files are already present in the repository's root-level `models/` directory. The three large trained model binaries are kept out of Git because of their size and should be downloaded from the configured Hugging Face model repository. The backend now looks in `models/` for all six files and downloads a missing file from Hugging Face when configured.
+**Model storage:** The three small model artifacts are already committed in the repository's root-level `models/` directory. The three large trained model binaries are not uploaded yet. They are intended to be hosted separately on [Hugging Face – agriprocure-ml-models](https://huggingface.co/Priyadharsini987/agriprocure-ml-models) because of their size. The Hugging Face repository has been created, but currently contains no model binaries.
 
 ## Technology Stack
 
@@ -115,11 +115,11 @@ The three small `.joblib` files already in `models/` should remain there. The th
 - `overload_prediction_model.joblib`
 - `demand_forecasting_model.joblib`
 
-Upload those original files to your Hugging Face model repository, keeping their filenames unchanged. Then set the following in your local `.env`:
+**Pending:** Upload those original files to the Hugging Face repository above, keeping their filenames unchanged. Until that upload is complete, keep the original files locally in `models/` if you need to run those model services. After uploading, set the following in your local `.env`:
 
 ```dotenv
 ML_MODELS_DIR=models
-HF_MODEL_REPO=your-username/agriprocure-ml-models
+HF_MODEL_REPO=Priyadharsini987/agriprocure-ml-models
 HF_TOKEN=
 ```
 
@@ -175,7 +175,7 @@ The Vite development server proxies `/api` requests to the Flask server on port 
 
 ## Current ML Artifact Status
 
-The three small model files are stored in GitHub under `models/`. The three large trained model binaries must be supplied through the configured Hugging Face repository (or placed locally in `models/`). Some ML service methods provide fallback or rule-based behaviour when an artifact is unavailable. Therefore, do not describe every prediction as trained-model inference unless the corresponding artifact is present and successfully loaded.
+The three small model artifacts currently committed under `models/` are `centre_recommendation_model.joblib`, `officer_decision_intelligence_model.joblib`, and `smart_slot_allocation_model.joblib`. The three large artifacts — `eta_prediction_model.joblib`, `overload_prediction_model.joblib`, and `demand_forecasting_model.joblib` — have not yet been uploaded to Hugging Face. The model repository is created here: [Priyadharsini987/agriprocure-ml-models](https://huggingface.co/Priyadharsini987/agriprocure-ml-models). Some ML service methods provide fallback or rule-based behaviour when an artifact is unavailable. Therefore, do not describe every prediction as trained-model inference unless the corresponding artifact is present and successfully loaded.
 
 ## Future Enhancements
 - Production-grade OTP and identity verification
