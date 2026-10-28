@@ -120,7 +120,7 @@ New-Item -ItemType Directory -Force ml_artifacts
 
 Place the six original files listed in the ML table into `ml_artifacts/`. By default, the backend reads from this directory. If you store the files elsewhere, set `ML_MODELS_DIR` in your local `.env` to that directory.
 
-The model files are intentionally ignored by Git because of their size. **They are not downloaded automatically from this repository.** Do not create empty placeholder files or rename a different model to match these filenames.
+The model files are intentionally ignored by Git because of their size. To download missing artifacts automatically, set `HF_MODEL_REPO` in `.env` to your Hugging Face repository ID (for example, `your-username/agriprocure-ml-models`). The backend prefers a valid local file and otherwise downloads the matching filename from that repository using `huggingface_hub`. For a public model repository, leave `HF_TOKEN` blank. For a private repository, set a Hugging Face read token in your local `.env`. Do not commit that token. Do not create empty placeholder files or rename a different model to match these filenames.
 
 ### 6. Start the application
 
