@@ -1,159 +1,213 @@
-<<<<<<< HEAD
-# React + Vite
+# 🌾 AgriProcure AI
+### AI-Powered Smart Agricultural Procurement Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+AgriProcure AI is an intelligent agricultural procurement platform designed to modernize crop procurement operations and improve coordination between farmers and procurement officers.
 
-Currently, two official plugins are available:
+The platform integrates full-stack web development, machine learning, and digital technologies to simplify crop booking, optimize procurement centre allocation, reduce waiting times, and provide data-driven operational insights.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Key Features
 
-## React Compiler
+### 👨‍🌾 Farmer Portal
+- Farmer registration and authentication.
+- Crop declaration with acreage and expected quantity.
+- AI-powered procurement centre recommendations.
+- Smart time-slot allocation.
+- Digital token generation with QR codes.
+- Queue position and estimated waiting-time tracking.
+- Procurement progress monitoring.
+- Payment status tracking and notifications.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🏢 Procurement Officer Dashboard
+- Centralized procurement management.
+- Live queue and procurement centre monitoring.
+- Crop arrival and demand forecasting.
+- Congestion and overload prediction.
+- Operational decision support.
+- Dynamic farmer allocation across procurement centres.
+- What-if simulations for procurement planning.
 
-## Expanding the Oxlint configuration
+### 🤖 Machine Learning Integration
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
-=======
-# 🌾 AgriProcure AI — Autonomous Full-Stack Procurement Platform (SIH)
+The application incorporates six machine learning components:
 
-An enterprise-grade, full-stack AI web application designed for the **Smart India Hackathon (SIH)**. This platform unifies **React 19 + Vite**, **Flask REST API**, **PostgreSQL / SQLite**, **Razorpay Payment Gateway**, and **WhatsApp Cloud & Click-to-Chat**, fully powered by **6 pre-trained Machine Learning models**.
+| Model | Functionality |
+|---|---|
+| Centre Recommendation | Recommends suitable procurement centres based on operational factors |
+| Smart Slot Allocation | Suggests suitable crop delivery time slots |
+| ETA Prediction | Estimates farmer waiting time |
+| Overload Prediction | Identifies procurement centre congestion |
+| Demand Forecasting | Predicts upcoming crop arrivals |
+| Officer Decision Intelligence | Supports procurement officers with operational recommendations |
 
----
+### 💳 Digital Integrations
+- Razorpay payment gateway integration.
+- QR code generation for digital tokens.
+- WhatsApp click-to-chat notifications.
+- WhatsApp Cloud API integration support.
+- SMS notification functionality.
+- Database integration for procurement records.
 
-## 🏛️ System Architecture
+## 🛠️ Technology Stack
 
+| Category | Technologies |
+|---|---|
+| Frontend | React 19, Vite, Tailwind CSS |
+| Backend | Python, Flask, REST APIs |
+| Database | SQLite, PostgreSQL |
+| ORM | SQLAlchemy |
+| Machine Learning | Scikit-learn, Pandas, NumPy |
+| Model Serialization | Joblib |
+| Data Visualization | Recharts |
+| Payment Integration | Razorpay |
+| Communication | WhatsApp, SMS |
+| Development Tools | Git, GitHub, VS Code |
+
+## 🏗️ System Architecture
+
+```text
+          Farmers & Procurement Officers
+                       |
+                       v
+              React 19 + Vite
+                 Frontend
+                       |
+                       v
+                Flask REST API
+                       |
+          +------------+------------+
+          |            |            |
+          v            v            v
+      Machine      Database     External
+      Learning     SQLAlchemy   Integrations
+      Models         ORM        Razorpay
+          |            |         WhatsApp
+          |            |         QR / SMS
+          +------------+------------+
+                       |
+                       v
+             Agricultural Procurement
+                    Platform
 ```
-                                  [ Farmers & Officers ]
-                                            │
-                                            ▼
-                          ┌───────────────────────────────────┐
-                          │     React 19 + Vite Frontend      │
-                          │   (Tailwind CSS, Recharts, Lucide)│
-                          │        http://localhost:5173      │
-                          └─────────────────┬─────────────────┘
-                                            │ Reverse Proxy / API calls
-                                            ▼
-                          ┌───────────────────────────────────┐
-                          │         Flask REST API            │
-                          │      http://127.0.0.1:5000/api    │
-                          └───────┬───────────────────┬───────┘
-                                  │                   │
-         ┌────────────────────────┴───────┐   ┌───────┴────────────────────────┐
-         │     6 Trained ML Models        │   │    External Integrations       │
-         │  • centre_recommendation       │   │  • Razorpay Orders & Checkout  │
-         │  • smart_slot_allocation       │   │  • Direct DBT MSP Payouts      │
-         │  • eta_prediction (Explainable)│   │  • WhatsApp Cloud / wa.me link │
-         │  • overload_prediction         │   │  • Base64 QR Code Generator    │
-         │  • demand_forecasting          │   │  • Real-time SMS Engine        │
-         │  • officer_decision_intel      │   └────────────────────────────────┘
-         └────────────────────────────────┘
-                                  │
-                                  ▼
-                          ┌───────────────────────────────────┐
-                          │   Database (SQLAlchemy ORM)       │
-                          │   • SQLite (Zero-config default)  │
-                          │   • PostgreSQL (Production ready) │
-                          └───────────────────────────────────┘
+
+## 🔄 Application Workflow
+
+1. **User Registration:** Farmers and procurement officers access their respective portals.
+2. **Crop Declaration:** Farmers submit crop details, acreage, and expected quantities.
+3. **AI Recommendations:** The system recommends suitable procurement centres.
+4. **Smart Slot Allocation:** An appropriate delivery time slot is suggested.
+5. **Digital Booking:** A procurement token and QR code are generated.
+6. **Gate Check-in:** Farmers check in at the procurement centre using their QR code.
+7. **Queue Monitoring:** Farmers track their queue position and estimated waiting time.
+8. **Procurement Processing:** Crop inspection, quality grading, weighing, and payment stages are tracked.
+9. **Officer Management:** Officers monitor procurement operations and use forecasting and decision-support features.
+
+## ⚡ Getting Started
+
+### Prerequisites
+
+- Python 3.11 or compatible version
+- Node.js and npm
+- Git
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Priyadharsini987/AgriProcure-AI.git
+cd AgriProcure-AI
 ```
 
----
+### 2. Install Backend Dependencies
 
-## ⚡ One-Click Startup
-
-### Option A: Double-Click Batch File (Windows)
-Simply double click:
+```bash
+pip install -r requirements.txt
 ```
+
+### 3. Configure Environment Variables
+
+Create the required environment configuration using the provided `.env.example` file.
+
+Configure database credentials and external API keys where required.
+
+**Note:** Never commit sensitive credentials, API keys, or passwords to GitHub.
+
+### 4. Run the Application
+
+**Option A: Windows One-Click Startup**
+
+```bash
 start_app.bat
 ```
-*Automatically launches the Flask API on port 5000, Vite React on port 5173, and opens `http://localhost:5173` in your default browser.*
 
----
+This launcher is designed to start the backend and frontend development servers.
 
-### Option B: Manual Command Line
+**Option B: Manual Startup**
 
-**Terminal 1 — Backend API:**
+Backend:
+
 ```bash
 cd backend
-"C:\Users\raksh\AppData\Local\Programs\Python\Python311\python.exe" run.py
+python run.py
 ```
-*(Or `python run.py` if Python 3.11 is your default)*
 
-**Terminal 2 — Frontend:**
+Frontend (open a separate terminal):
+
 ```bash
 cd frontend
+npm install
 npm run dev
 ```
 
-Open your browser at: **`http://localhost:5173`**
+### 5. Access the Application
+
+| Component | Local URL |
+|---|---|
+| Frontend | http://localhost:5173 |
+| Backend API | http://127.0.0.1:5000/api |
+
+## 🧠 Machine Learning Capabilities
+
+The platform uses machine learning to support intelligent procurement operations:
+
+- **Centre Recommendation:** Evaluates procurement centre suitability.
+- **Slot Optimization:** Helps distribute farmer arrivals across available time slots.
+- **ETA Prediction:** Estimates waiting times based on queue conditions.
+- **Overload Detection:** Identifies potential congestion at procurement centres.
+- **Demand Forecasting:** Estimates future crop arrivals.
+- **Decision Intelligence:** Provides operational recommendations to procurement officers.
+
+## 🔐 Security and Data Management
+
+- Role-based access for farmers and procurement officers.
+- Environment-based configuration for sensitive credentials.
+- Backend API-based communication.
+- Structured database management using SQLAlchemy ORM.
+- Secure payment integration through the configured payment gateway.
+
+## 🎯 Project Objectives
+
+- Digitize agricultural procurement operations.
+- Reduce unnecessary waiting times for farmers.
+- Improve procurement centre resource utilization.
+- Enable intelligent scheduling and allocation.
+- Provide transparent procurement tracking.
+- Support data-driven operational decisions through machine learning.
+
+## 🌱 Future Enhancements
+
+- Enhanced multilingual support.
+- Integration with additional agricultural services.
+- Improved predictive models using real-time procurement data.
+- Expanded mobile accessibility.
+- Advanced analytics and reporting.
+
+## 👩‍💻 Project Information
+
+**Project Name:** AgriProcure AI  
+**Domain:** Artificial Intelligence, Machine Learning & Full-Stack Development  
+**Application Area:** Agricultural Technology
 
 ---
 
-## 🔑 Demo Credentials
+⭐ If you find this project interesting, consider giving the repository a star!
 
-| Role | Username | Password | Details |
-| :--- | :--- | :--- | :--- |
-| **Farmer** | `farmer1` | `farmer123` | Ramesh Patil (Active Token: `A-123`, 4.0 Quintals Wheat) |
-| **Officer** | `officer1` | `officer123` | Dr. Arvind Sharma (Coimbatore Central APMC & Agricultural Complex) |
-
-*Note: You can also register a new Farmer or Officer account with live Aadhaar / Officer ID verification!*
-
----
-
-## 🧠 Integrated Machine Learning Models (6 Models)
-
-| # | Model Artifact | Algorithm | Capability & Role in Workflow |
-| :-: | :--- | :--- | :--- |
-| **1** | `centre_recommendation_model.joblib` | Multi-Objective Scoring Pipeline | Recommends top 3 APMC centres considering proximity, waiting time, congestion, and capacity. |
-| **2** | `smart_slot_allocation_model.joblib` | Slot Optimization | Allocates the optimal arrival hour (08:00–09:00, etc.) to smooth queue peaks. |
-| **3** | `eta_prediction_model.joblib` | Wait Time Regressor | Computes real-time estimated waiting time with **Explainable AI factors** (12 farmers ahead, inspection duration, counter availability, 91% confidence). |
-| **4** | `overload_prediction_model.joblib` | Risk Classifier | Classifies congestion into `LOW`, `MODERATE`, `HIGH` with exact probability outputs. |
-| **5** | `demand_forecasting_model.joblib` | Forward Arrival Forecaster | Predicts daily and weekly crop arrivals for 14 forward days (`This Week` & `Next Week`). |
-| **6** | `officer_decision_intelligence_model.joblib` | Operational Decision Engine | Prescribes actionable commands: `PROCEED`, `OPEN_EXTRA_COUNTER`, `EXPEDITE_INSPECTION`, or `SHIFT_FARMERS`. |
-
----
-
-## 💳 Razorpay & WhatsApp Integrations
-
-### 1. Razorpay Payment Gateway
-- **Slot Verification Fee (₹50)**: Interactive simulated and live Razorpay checkout supporting UPI (Google Pay, PhonePe, Paytm), RuPay / Visa Cards, and NetBanking.
-- **MSP Direct Benefit Transfer (DBT)**: Automatic mock payout generation (`pout_...`) with government bank UTR tracking for crop procurement settlement.
-- **Auto-advancement**: Payment completion advances procurement booking to `Payment Initiated`.
-
-### 2. WhatsApp Messaging & Click-to-Chat
-- **Direct `wa.me` Click-to-Chat Links**: Pre-formatted WhatsApp links with token details, procurement centre location, slot times, and directions.
-- **Meta Cloud API Ready**: Configure `META_WHATSAPP_TOKEN` and `META_PHONE_NUMBER_ID` in `backend/.env` for real-time automated template messages.
-
----
-
-## 📱 Complete End-to-End Workflow
-
-1. **Language & Onboarding**: Choose from 9 Indian languages (English, Tamil, Hindi, Marathi, etc.) with dynamic translation.
-2. **Crop Declaration**: Enter crop (Wheat, Paddy, Cotton, etc.), acreage, and expected tonnage.
-3. **AI Recommendation**: View top 3 recommended centres with AI suitability score, distance, and optimal time slot.
-4. **Slot Confirmation & QR Code**: Book slot to generate a verified token (`B-161`) with a Base64 QR code and instant SMS/WhatsApp confirmation.
-5. **Gate Check-In & Scanner**: Scan QR code at centre gate to check in.
-6. **Live Queue & Explainable AI**: Monitor real-time queue position with transparent explanation breakdown.
-7. **7-Stage Procurement Timeline**:
-   `Booked` ➔ `Arrived` ➔ `Moisture Tested` ➔ `Quality Grading` ➔ `Weighed` ➔ `Payment Generated` ➔ `Payment Initiated`.
-8. **Officer Command Centre**:
-   - **Live Queue Monitoring**: Real-time counter metrics.
-   - **Demand Forecasting**: Interactive chart comparing weekly capacity against AI predicted demand.
-   - **Digital Twin**: Run what-if simulations for ±counters, heavy rain, and +50 farmer surges.
-   - **Dynamic Load Balancing**: Shift farmers to nearby under-utilized centres with automated SMS rerouting alerts.
-
----
-
-## 🧪 Verification & Automated Testing
-
-Run the full integration test suite covering all 18 end-to-end endpoints and integrations:
-```bash
-"C:\Users\raksh\AppData\Local\Programs\Python\Python311\python.exe" scratch/test_api.py
-```
-Run the dedicated Razorpay & WhatsApp test suite:
-```bash
-"C:\Users\raksh\AppData\Local\Programs\Python\Python311\python.exe" scratch/test_razorpay_whatsapp.py
-```
-*(All 18 automated integration tests pass with 100% success)*
->>>>>>> origin/main
+**GitHub:** [Priyadharsini987](https://github.com/Priyadharsini987)
