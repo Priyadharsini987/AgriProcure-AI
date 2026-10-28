@@ -32,7 +32,7 @@ AgriProcure AI is a full-stack agricultural procurement platform designed to imp
 | `overload_prediction_model.joblib` | Procurement-centre overload prediction |
 | `smart_slot_allocation_model.joblib` | Delivery time-slot allocation |
 
-**Important:** The trained `.joblib` binaries are not included in this source repository. The ML service contains model-loading logic and fallback behaviour for some components, but fallback output is not the same as inference from the trained artifact. To use trained predictions, obtain all six original files and place them in the `ml_artifacts/` directory described below.
+**Model storage:** The three small model files are already present in the repository's root-level `models/` directory. The three large trained model binaries are kept out of Git because of their size and should be downloaded from the configured Hugging Face model repository. The backend now looks in `models/` for all six files and downloads a missing file from Hugging Face when configured.
 
 ## Technology Stack
 
@@ -59,12 +59,11 @@ AgriProcure-AI/
 ├── requirements.txt
 ├── routes/                 # Flask API blueprints
 ├── services/               # ML and integration services
-├── models/                 # SQLAlchemy database models
+├── models/                 # Existing model package and .joblib artifacts
 ├── src/                    # React application source
 ├── public/                 # Static frontend assets
 ├── package.json
 ├── vite.config.js
-├── ml_artifacts/           # Local trained .joblib files (not committed)
 ├── .env.example
 ├── .gitignore
 ├── start_app.bat
@@ -87,8 +86,6 @@ cd AgriProcure-AI
 
 ### 2. Configure environment variables
 
-Create your local environment file from the example:
-
 **Windows PowerShell**
 ```powershell
 Copy-Item .env.example .env
@@ -110,23 +107,29 @@ Run from the repository root:
 npm install
 ```
 
-### 5. Add trained ML artifacts (if available)
+### 5. Configure the ML model files
 
-Create the model directory:
+The three small `.joblib` files already in `models/` should remain there. The three large files are:
 
-```powershell
-New-Item -ItemType Directory -Force ml_artifacts
+- `eta_prediction_model.joblib`
+- `overload_prediction_model.joblib`
+- `demand_forecasting_model.joblib`
+
+Upload those original files to your Hugging Face model repository, keeping their filenames unchanged. Then set the following in your local `.env`:
+
+```dotenv
+ML_MODELS_DIR=models
+HF_MODEL_REPO=your-username/agriprocure-ml-models
+HF_TOKEN=
 ```
 
-Place the six original files listed in the ML table into `ml_artifacts/`. By default, the backend reads from this directory. If you store the files elsewhere, set `ML_MODELS_DIR` in your local `.env` to that directory.
+For a public Hugging Face repository, leave `HF_TOKEN` blank. For a private repository, set a Hugging Face read token locally and never commit it. When a local model file is missing, the backend downloads the matching filename from the configured Hugging Face repository. The backend prefers a valid local file first.
 
-The model files are intentionally ignored by Git because of their size. To download missing artifacts automatically, set `HF_MODEL_REPO` in `.env` to your Hugging Face repository ID (for example, `your-username/agriprocure-ml-models`). The backend prefers a valid local file and otherwise downloads the matching filename from that repository using `huggingface_hub`. For a public model repository, leave `HF_TOKEN` blank. For a private repository, set a Hugging Face read token in your local `.env`. Do not commit that token. Do not create empty placeholder files or rename a different model to match these filenames.
+The model binaries are intentionally excluded from Git because of their size. Do not create empty placeholder files or rename a different model to match these filenames.
 
 ### 6. Start the application
 
 **Windows one-click startup**
-
-After installing both sets of dependencies:
 
 ```bat
 start_app.bat
@@ -164,7 +167,7 @@ The Vite development server proxies `/api` requests to the Flask server on port 
 
 ## Configuration and Security Notes
 
-- Do not commit `.env`, database files, API credentials, or trained model binaries.
+- Do not commit `.env`, database files, API credentials, or large trained model binaries.
 - `.env.example` contains placeholders only; configure real credentials locally.
 - The current authentication routes include demo-oriented OTP/Aadhaar verification behaviour. These are **not production identity-verification integrations** and must be replaced with verified provider integrations before real-world use.
 - Use a strong, private `SECRET_KEY`; do not use a public/demo key in a deployed environment.
@@ -172,10 +175,9 @@ The Vite development server proxies `/api` requests to the Flask server on port 
 
 ## Current ML Artifact Status
 
-The source code expects six trained model files, but the model binaries are not stored in this GitHub repository. Some ML service methods provide fallback or rule-based behaviour when an artifact is unavailable. Therefore, do not describe every prediction as trained-model inference unless the corresponding artifact is present and successfully loaded.
+The three small model files are stored in GitHub under `models/`. The three large trained model binaries must be supplied through the configured Hugging Face repository (or placed locally in `models/`). Some ML service methods provide fallback or rule-based behaviour when an artifact is unavailable. Therefore, do not describe every prediction as trained-model inference unless the corresponding artifact is present and successfully loaded.
 
 ## Future Enhancements
-- Automated secure model-artifact download from a configured model registry
 - Production-grade OTP and identity verification
 - Improved monitoring, tests, and deployment configuration
 - Additional analytics and multilingual support
