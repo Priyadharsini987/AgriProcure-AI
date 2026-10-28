@@ -47,7 +47,7 @@ def send_otp():
 
     return jsonify({
         'status': 'success',
-        'message': f'OTP sent successfully to {mobile}',
+        'message': f'Demo OTP generated for {mobile}. This is not an SMS delivery.',
         'demo_otp': otp_code
     })
 
@@ -83,7 +83,7 @@ def verify_aadhaar():
     return jsonify({
         'status': 'success',
         'verified': True,
-        'message': 'Aadhaar verified successfully via UIDAI Government Gateway',
+        'message': 'Demo format check passed only; no UIDAI verification was performed',
         'masked_aadhaar': f"XXXX-XXXX-{aadhaar[-4:]}"
     })
 
