@@ -1,5 +1,5 @@
 __pycache__/
-*.pyc
+*.py[cod]
 *.db
 .env
 venv/
@@ -7,3 +7,9 @@ venv/
 node_modules/
 dist/
 build/
+
+# Trained ML binaries are stored separately (for example, on Hugging Face).
+ml_artifacts/
+*.joblib
+*.pkl
+*.pickle
