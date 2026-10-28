@@ -39,7 +39,22 @@ The application incorporates six machine learning components:
 | Demand Forecasting | Predicts upcoming crop arrivals |
 | Officer Decision Intelligence | Supports procurement officers with operational recommendations |
 
-### 💳 Digital Integrations
+### ⚠️ Trained ML Model Files
+
+**The trained model files are intentionally not uploaded to this GitHub repository because their file sizes are too large.** The source code, ML service integration, and model-loading logic are included, but the trained model binaries must be obtained separately to run the corresponding trained prediction features.
+
+The application expects these six Joblib model files:
+- centre_recommendation_model.joblib
+- demand_forecasting_model.joblib
+- eta_prediction_model.joblib
+- officer_decision_intelligence_model.joblib
+- overload_prediction_model.joblib
+- smart_slot_allocation_model.joblib
+
+The expected file paths are defined in config.py. Place the model files at the configured paths before running trained ML inference. Without these files, trained-model predictions will not be available; individual features may use their implemented fallback behavior where supported.
+
+These artifacts are excluded from the repository to keep the GitHub source repository lightweight.
+## 💳 Digital Integrations
 - Razorpay payment gateway integration.
 - QR code generation for digital tokens.
 - WhatsApp click-to-chat notifications.
