@@ -15,10 +15,34 @@ class MLService:
             cls._instance._load_models()
         return cls._instance
 
+    def _resolve_model_path(self, local_path):
+        """Prefer a local artifact; otherwise download it from the configured Hugging Face repo."""
+        if os.path.isfile(local_path) and os.path.getsize(local_path) > 0:
+            return local_path
+
+        repo_id = os.environ.get("HF_MODEL_REPO", "").strip()
+        if not repo_id:
+            return local_path
+
+        filename = os.path.basename(local_path)
+        try:
+            from huggingface_hub import hf_hub_download
+            token = os.environ.get("HF_TOKEN") or None
+            downloaded_path = hf_hub_download(
+                repo_id=repo_id,
+                filename=filename,
+                token=token
+            )
+            print(f"  [OK] Downloaded {filename} from Hugging Face")
+            return downloaded_path
+        except Exception as exc:
+            print(f"  [WARN] Could not download {filename} from Hugging Face: {exc}")
+            return local_path
+
     def _load_models(self):
         print("[MLService] Initializing and loading 6 machine learning models...")
         try:
-            self.centre_rec_meta = joblib.load(Config.CENTRE_RECOMMENDATION_MODEL)
+            self.centre_rec_meta = joblib.load(self._resolve_model_path(Config.CENTRE_RECOMMENDATION_MODEL))
             print("  [OK] Loaded centre_recommendation_model.joblib")
         except Exception as e:
             print(f"  [ERROR] Error loading centre recommendation model: {e}")
@@ -28,21 +52,21 @@ class MLService:
             }
 
         try:
-            self.demand_forecast_model = joblib.load(Config.DEMAND_FORECASTING_MODEL)
+            self.demand_forecast_model = joblib.load(self._resolve_model_path(Config.DEMAND_FORECASTING_MODEL))
             print("  [OK] Loaded demand_forecasting_model.joblib")
         except Exception as e:
             print(f"  [ERROR] Error loading demand forecasting model: {e}")
             self.demand_forecast_model = None
 
         try:
-            self.eta_model = joblib.load(Config.ETA_PREDICTION_MODEL)
+            self.eta_model = joblib.load(self._resolve_model_path(Config.ETA_PREDICTION_MODEL))
             print("  [OK] Loaded eta_prediction_model.joblib")
         except Exception as e:
             print(f"  [ERROR] Error loading ETA prediction model: {e}")
             self.eta_model = None
 
         try:
-            self.officer_intelligence_meta = joblib.load(Config.OFFICER_DECISION_INTELLIGENCE_MODEL)
+            self.officer_intelligence_meta = joblib.load(self._resolve_model_path(Config.OFFICER_DECISION_INTELLIGENCE_MODEL))
             print("  [OK] Loaded officer_decision_intelligence_model.joblib")
         except Exception as e:
             print(f"  [ERROR] Error loading officer decision intelligence model: {e}")
@@ -51,14 +75,14 @@ class MLService:
             }
 
         try:
-            self.overload_model = joblib.load(Config.OVERLOAD_PREDICTION_MODEL)
+            self.overload_model = joblib.load(self._resolve_model_path(Config.OVERLOAD_PREDICTION_MODEL))
             print("  [OK] Loaded overload_prediction_model.joblib")
         except Exception as e:
             print(f"  [ERROR] Error loading overload prediction model: {e}")
             self.overload_model = None
 
         try:
-            self.slot_allocation_meta = joblib.load(Config.SMART_SLOT_ALLOCATION_MODEL)
+            self.slot_allocation_meta = joblib.load(self._resolve_model_path(Config.SMART_SLOT_ALLOCATION_MODEL))
             print("  [OK] Loaded smart_slot_allocation_model.joblib")
         except Exception as e:
             print(f"  [ERROR] Error loading smart slot allocation model: {e}")
