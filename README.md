@@ -1,228 +1,192 @@
 # 🌾 AgriProcure AI
 ### AI-Powered Smart Agricultural Procurement Platform
 
-AgriProcure AI is an intelligent agricultural procurement platform designed to modernize crop procurement operations and improve coordination between farmers and procurement officers.
+AgriProcure AI is a full-stack agricultural procurement platform designed to improve coordination between farmers and procurement officers. It combines a React frontend, Flask REST API, SQL database integration, and six machine-learning components for procurement planning and operational decision support.
 
-The platform integrates full-stack web development, machine learning, and digital technologies to simplify crop booking, optimize procurement centre allocation, reduce waiting times, and provide data-driven operational insights.
+## Key Features
 
-## 🚀 Key Features
+### Farmer Portal
+- Farmer registration and login
+- Crop declaration with acreage and expected quantity
+- Procurement-centre recommendations
+- Smart time-slot allocation
+- Digital booking tokens and QR codes
+- Queue position and estimated waiting-time tracking
+- Procurement progress and payment-status tracking
 
-### 👨‍🌾 Farmer Portal
-- Farmer registration and authentication.
-- Crop declaration with acreage and expected quantity.
-- AI-powered procurement centre recommendations.
-- Smart time-slot allocation.
-- Digital token generation with QR codes.
-- Queue position and estimated waiting-time tracking.
-- Procurement progress monitoring.
-- Payment status tracking and notifications.
+### Procurement Officer Dashboard
+- Procurement-centre and queue monitoring
+- Demand forecasting and overload-risk analysis
+- Operational decision support
+- Farmer reallocation recommendations
+- What-if simulations through a digital-twin service
 
-### 🏢 Procurement Officer Dashboard
-- Centralized procurement management.
-- Live queue and procurement centre monitoring.
-- Crop arrival and demand forecasting.
-- Congestion and overload prediction.
-- Operational decision support.
-- Dynamic farmer allocation across procurement centres.
-- What-if simulations for procurement planning.
+### Six ML Components
 
-### 🤖 Machine Learning Integration
-
-The application incorporates six machine learning components:
-
-| Model | Functionality |
+| Model artifact | Purpose |
 |---|---|
-| Centre Recommendation | Recommends suitable procurement centres based on operational factors |
-| Smart Slot Allocation | Suggests suitable crop delivery time slots |
-| ETA Prediction | Estimates farmer waiting time |
-| Overload Prediction | Identifies procurement centre congestion |
-| Demand Forecasting | Predicts upcoming crop arrivals |
-| Officer Decision Intelligence | Supports procurement officers with operational recommendations |
+| `centre_recommendation_model.joblib` | Procurement-centre recommendation |
+| `demand_forecasting_model.joblib` | Crop-arrival demand forecasting |
+| `eta_prediction_model.joblib` | Waiting-time estimation |
+| `officer_decision_intelligence_model.joblib` | Officer decision support |
+| `overload_prediction_model.joblib` | Procurement-centre overload prediction |
+| `smart_slot_allocation_model.joblib` | Delivery time-slot allocation |
 
-### ⚠️ Trained ML Model Files
+**Important:** The trained `.joblib` binaries are not included in this source repository. The ML service contains model-loading logic and fallback behaviour for some components, but fallback output is not the same as inference from the trained artifact. To use trained predictions, obtain all six original files and place them in the `ml_artifacts/` directory described below.
 
-**The trained model files are intentionally not uploaded to this GitHub repository because their file sizes are too large.** The source code, ML service integration, and model-loading logic are included, but the trained model binaries must be obtained separately to run the corresponding trained prediction features.
+## Technology Stack
 
-The application expects these six Joblib model files:
-- centre_recommendation_model.joblib
-- demand_forecasting_model.joblib
-- eta_prediction_model.joblib
-- officer_decision_intelligence_model.joblib
-- overload_prediction_model.joblib
-- smart_slot_allocation_model.joblib
-
-The expected file paths are defined in config.py. Place the model files at the configured paths before running trained ML inference. Without these files, trained-model predictions will not be available; individual features may use their implemented fallback behavior where supported.
-
-These artifacts are excluded from the repository to keep the GitHub source repository lightweight.
-## 💳 Digital Integrations
-- Razorpay payment gateway integration.
-- QR code generation for digital tokens.
-- WhatsApp click-to-chat notifications.
-- WhatsApp Cloud API integration support.
-- SMS notification functionality.
-- Database integration for procurement records.
-
-## 🛠️ Technology Stack
-
-| Category | Technologies |
+| Layer | Technologies |
 |---|---|
 | Frontend | React 19, Vite, Tailwind CSS |
-| Backend | Python, Flask, REST APIs |
-| Database | SQLite, PostgreSQL |
-| ORM | SQLAlchemy |
-| Machine Learning | Scikit-learn, Pandas, NumPy |
-| Model Serialization | Joblib |
-| Data Visualization | Recharts |
-| Payment Integration | Razorpay |
-| Communication | WhatsApp, SMS |
-| Development Tools | Git, GitHub, VS Code |
+| Backend | Python, Flask, Flask REST APIs |
+| Database / ORM | SQLite by default, SQLAlchemy; PostgreSQL/MySQL URL support |
+| Machine Learning | Scikit-learn, Pandas, NumPy, Joblib |
+| Charts | Recharts |
+| Integrations | Razorpay configuration, QR codes, WhatsApp/SMS service hooks |
+| Tools | Git, GitHub, VS Code |
 
-## 🏗️ System Architecture
+## Repository Structure
+
+This repository uses a **single root-level frontend and backend**, not separate `frontend/` and `backend/` folders.
 
 ```text
-          Farmers & Procurement Officers
-                       |
-                       v
-              React 19 + Vite
-                 Frontend
-                       |
-                       v
-                Flask REST API
-                       |
-          +------------+------------+
-          |            |            |
-          v            v            v
-      Machine      Database     External
-      Learning     SQLAlchemy   Integrations
-      Models         ORM        Razorpay
-          |            |         WhatsApp
-          |            |         QR / SMS
-          +------------+------------+
-                       |
-                       v
-             Agricultural Procurement
-                    Platform
+AgriProcure-AI/
+├── app.py
+├── run.py
+├── config.py
+├── database.py
+├── requirements.txt
+├── routes/                 # Flask API blueprints
+├── services/               # ML and integration services
+├── models/                 # SQLAlchemy database models
+├── src/                    # React application source
+├── public/                 # Static frontend assets
+├── package.json
+├── vite.config.js
+├── ml_artifacts/           # Local trained .joblib files (not committed)
+├── .env.example
+├── .gitignore
+├── start_app.bat
+└── start_app.ps1
 ```
 
-## 🔄 Application Workflow
-
-1. **User Registration:** Farmers and procurement officers access their respective portals.
-2. **Crop Declaration:** Farmers submit crop details, acreage, and expected quantities.
-3. **AI Recommendations:** The system recommends suitable procurement centres.
-4. **Smart Slot Allocation:** An appropriate delivery time slot is suggested.
-5. **Digital Booking:** A procurement token and QR code are generated.
-6. **Gate Check-in:** Farmers check in at the procurement centre using their QR code.
-7. **Queue Monitoring:** Farmers track their queue position and estimated waiting time.
-8. **Procurement Processing:** Crop inspection, quality grading, weighing, and payment stages are tracked.
-9. **Officer Management:** Officers monitor procurement operations and use forecasting and decision-support features.
-
-## ⚡ Getting Started
+## Setup and Run Locally
 
 ### Prerequisites
-
 - Python 3.11 or compatible version
 - Node.js and npm
 - Git
 
-### 1. Clone the Repository
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/Priyadharsini987/AgriProcure-AI.git
 cd AgriProcure-AI
 ```
 
-### 2. Install Backend Dependencies
+### 2. Configure environment variables
 
-```bash
-pip install -r requirements.txt
+Create your local environment file from the example:
+
+**Windows PowerShell**
+```powershell
+Copy-Item .env.example .env
 ```
 
-### 3. Configure Environment Variables
+Edit `.env` and set a unique `SECRET_KEY`. Add database or third-party credentials only if you use those integrations. The default database is SQLite.
 
-Create the required environment configuration using the provided `.env.example` file.
-
-Configure database credentials and external API keys where required.
-
-**Note:** Never commit sensitive credentials, API keys, or passwords to GitHub.
-
-### 4. Run the Application
-
-**Option A: Windows One-Click Startup**
+### 3. Install backend dependencies
 
 ```bash
+python -m pip install -r requirements.txt
+```
+
+### 4. Install frontend dependencies
+
+Run from the repository root:
+
+```bash
+npm install
+```
+
+### 5. Add trained ML artifacts (if available)
+
+Create the model directory:
+
+```powershell
+New-Item -ItemType Directory -Force ml_artifacts
+```
+
+Place the six original files listed in the ML table into `ml_artifacts/`. By default, the backend reads from this directory. If you store the files elsewhere, set `ML_MODELS_DIR` in your local `.env` to that directory.
+
+The model files are intentionally ignored by Git because of their size. **They are not downloaded automatically from this repository.** Do not create empty placeholder files or rename a different model to match these filenames.
+
+### 6. Start the application
+
+**Windows one-click startup**
+
+After installing both sets of dependencies:
+
+```bat
 start_app.bat
 ```
 
-This launcher is designed to start the backend and frontend development servers.
+Or start the backend and frontend in separate terminals from the repository root.
 
-**Option B: Manual Startup**
-
-Backend:
-
+Terminal 1 — Flask backend:
 ```bash
-cd backend
 python run.py
 ```
 
-Frontend (open a separate terminal):
-
+Terminal 2 — Vite frontend:
 ```bash
-cd frontend
-npm install
 npm run dev
 ```
 
-### 5. Access the Application
+### 7. Open the application
 
-| Component | Local URL |
+| Component | URL |
 |---|---|
 | Frontend | http://localhost:5173 |
-| Backend API | http://127.0.0.1:5000/api |
+| Backend root / health response | http://127.0.0.1:5000/ |
 
-## 🧠 Machine Learning Capabilities
+The Vite development server proxies `/api` requests to the Flask server on port 5000.
 
-The platform uses machine learning to support intelligent procurement operations:
+## Application Workflow
 
-- **Centre Recommendation:** Evaluates procurement centre suitability.
-- **Slot Optimization:** Helps distribute farmer arrivals across available time slots.
-- **ETA Prediction:** Estimates waiting times based on queue conditions.
-- **Overload Detection:** Identifies potential congestion at procurement centres.
-- **Demand Forecasting:** Estimates future crop arrivals.
-- **Decision Intelligence:** Provides operational recommendations to procurement officers.
+1. Farmers register and submit crop details.
+2. The backend processes booking and procurement-centre information.
+3. ML services provide recommendations, forecasts, ETA estimates, and overload analysis when their trained artifacts are available.
+4. The system creates a booking token and QR code.
+5. Farmers can follow queue and procurement progress.
+6. Officers monitor centres and can use decision-support and simulation features.
 
-## 🔐 Security and Data Management
+## Configuration and Security Notes
 
-- Role-based access for farmers and procurement officers.
-- Environment-based configuration for sensitive credentials.
-- Backend API-based communication.
-- Structured database management using SQLAlchemy ORM.
-- Secure payment integration through the configured payment gateway.
+- Do not commit `.env`, database files, API credentials, or trained model binaries.
+- `.env.example` contains placeholders only; configure real credentials locally.
+- The current authentication routes include demo-oriented OTP/Aadhaar verification behaviour. These are **not production identity-verification integrations** and must be replaced with verified provider integrations before real-world use.
+- Use a strong, private `SECRET_KEY`; do not use a public/demo key in a deployed environment.
+- Review payment, SMS, and WhatsApp provider configuration before enabling live transactions or messages.
 
-## 🎯 Project Objectives
+## Current ML Artifact Status
 
-- Digitize agricultural procurement operations.
-- Reduce unnecessary waiting times for farmers.
-- Improve procurement centre resource utilization.
-- Enable intelligent scheduling and allocation.
-- Provide transparent procurement tracking.
-- Support data-driven operational decisions through machine learning.
+The source code expects six trained model files, but the model binaries are not stored in this GitHub repository. Some ML service methods provide fallback or rule-based behaviour when an artifact is unavailable. Therefore, do not describe every prediction as trained-model inference unless the corresponding artifact is present and successfully loaded.
 
-## 🌱 Future Enhancements
+## Future Enhancements
+- Automated secure model-artifact download from a configured model registry
+- Production-grade OTP and identity verification
+- Improved monitoring, tests, and deployment configuration
+- Additional analytics and multilingual support
 
-- Enhanced multilingual support.
-- Integration with additional agricultural services.
-- Improved predictive models using real-time procurement data.
-- Expanded mobile accessibility.
-- Advanced analytics and reporting.
+## Project Information
 
-## 👩‍💻 Project Information
-
-**Project Name:** AgriProcure AI  
-**Domain:** Artificial Intelligence, Machine Learning & Full-Stack Development  
+**Project:** AgriProcure AI  
+**Domain:** Artificial Intelligence, Machine Learning, and Full-Stack Development  
 **Application Area:** Agricultural Technology
 
+**GitHub:** https://github.com/Priyadharsini987/AgriProcure-AI
+
 ---
-
-⭐ If you find this project interesting, consider giving the repository a star!
-
-**GitHub:** [Priyadharsini987](https://github.com/Priyadharsini987)
+⭐ If you find this project useful, consider giving the repository a star.
